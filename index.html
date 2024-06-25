@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Text Refiner - by Vishal</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orelega+One&family=Permanent+Marker&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        h1 {
+            font-family: "Orelega One", serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .container {
+            width: 80vw;
+            max-width: 800px;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        textarea {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 5px;
+            padding: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        #output {
+            white-space: pre-wrap;
+            /* Preserves whitespace in the output */
+            border: 1px solid #ccc;
+            padding: 10px;
+            min-height: 100px;
+            font-size: 16px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        button {
+            /* margin: 5px; */
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        li,
+        h3 {
+            color: #800000;
+            font-family: "Open Sans", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 5px;
+            font-style: normal;
+            font-variation-settings:
+                "wdth" 100;
+        }
+
+        button:hover {
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 style="text-align: center;">PDF Text Refiner</h1>
+        <h3 style="margin: 0px;">Instructions</h3>
+        <ul style="text-align: justify;">
+            <li>Copy the text from your PDF.</li>
+            <li>Paste the copied content into the text box below.</li>
+            <li>Click the "Format Text" button to remove extra spaces and convert the text into a single, continuous line.</li>
+            <li>Use the "Copy to Clipboard" button to copy the formatted text for further use.</li>
+        </ul>
+        <textarea id="inputText" placeholder="Paste your PDF text here..."></textarea>
+        <br>
+        <button onclick="formatText()">Format Text</button>
+        <h2>Formatted Text:</h2>
+        <div id="output"></div>
+        <button onclick="copyToClipboard()">Copy to Clipboard</button>
+    </div>
+
+    <script>
+        function formatText() {
+            // Get the input text
+            const inputText = document.getElementById('inputText').value;
+
+            // Remove extra spaces from each line and replace multiple line breaks with a single space
+            const lines = inputText.split('\n').map(line => line.replace(/\s+/g, ' ').trim());
+            const formattedText = lines.join(' ').replace(/\s\s+/g, ' ').trim();
+
+            // Display the formatted text
+            document.getElementById('output').innerText = formattedText;
+        }
+
+        function copyToClipboard() {
+            // Get the formatted text
+            const formattedText = document.getElementById('output').innerText;
+
+            // Copy the formatted text to the clipboard
+            navigator.clipboard.writeText(formattedText).then(() => {
+                alert('Formatted text copied to clipboard!');
+            }).catch(err => {
+                alert('Failed to copy text: ', err);
+            });
+        }
+    </script>
+</body>
+
+</html>
