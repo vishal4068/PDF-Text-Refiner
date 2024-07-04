@@ -86,19 +86,31 @@
         <ul style="text-align: justify;">
             <li>Copy the text from your PDF.</li>
             <li>Paste the copied content into the text box below.</li>
-            <li>Click the "Format Text" button to remove extra spaces and convert the text into a single, continuous line.</li>
-            <li>Use the "Copy to Clipboard" button to copy the formatted text for further use.</li>
+            <li>Click the "Format Text & Copy to Clipboard" button to remove extra spaces, convert the text into a
+                single, continuous line, and copy it to the clipboard.</li>
         </ul>
         <textarea id="inputText" placeholder="Paste your PDF text here..."></textarea>
         <br>
-        <button onclick="formatText()">Format Text</button>
+        <button onclick="formatTextcopyToClipboard()">Format Text & Copy to Clipboard</button>
         <h2>Formatted Text:</h2>
         <div id="output"></div>
-        <button onclick="copyToClipboard()">Copy to Clipboard</button>
+        <!-- <button onclick="copyToClipboard()">Copy to Clipboard</button> -->
     </div>
 
     <script>
-        function formatText() {
+        // function formatText() {
+        // // Get the input text
+        // const inputText = document.getElementById('inputText').value;
+
+        // // Remove extra spaces from each line and replace multiple line breaks with a single space
+        // const lines = inputText.split('\n').map(line => line.replace(/\s+/g, ' ').trim());
+        // const formattedText = lines.join(' ').replace(/\s\s+/g, ' ').trim();
+
+        // // Display the formatted text
+        // document.getElementById('output').innerText = formattedText;
+        // }
+
+        function formatTextcopyToClipboard() {
             // Get the input text
             const inputText = document.getElementById('inputText').value;
 
@@ -108,15 +120,25 @@
 
             // Display the formatted text
             document.getElementById('output').innerText = formattedText;
-        }
-
-        function copyToClipboard() {
             // Get the formatted text
-            const formattedText = document.getElementById('output').innerText;
+            const formattedTextForClipboard = document.getElementById('output').innerText;
 
             // Copy the formatted text to the clipboard
-            navigator.clipboard.writeText(formattedText).then(() => {
-                alert('Formatted text copied to clipboard!');
+            navigator.clipboard.writeText(formattedTextForClipboard).then(() => {
+                // Show an alert for 1 second
+                const alertBox = document.createElement('div');
+                alertBox.innerText = 'Copied to clipboard!';
+                alertBox.style.position = 'fixed';
+                alertBox.style.top = '10px';
+                alertBox.style.right = '10px';
+                alertBox.style.padding = '10px';
+                alertBox.style.borderRadius = '10px';
+                alertBox.style.backgroundColor = 'green';
+                alertBox.style.color = 'white';
+                document.body.appendChild(alertBox);
+                setTimeout(() => {
+                    document.body.removeChild(alertBox);
+                }, 1000);
             }).catch(err => {
                 alert('Failed to copy text: ', err);
             });
